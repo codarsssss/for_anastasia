@@ -28,9 +28,23 @@ client_base = pd.DataFrame(
 )
 
 # Объединение таблиц rzd, auto, air по столбцу client_id
-# Аргумент how='left' определяет тип объединения как left join
-merged_data = pd.merge(client_base, rzd, on='client_id', how='left')
-merged_data = pd.merge(merged_data, auto, on='client_id', how='left')
-merged_data = pd.merge(merged_data, air, on='client_id', how='left')
 
-print(merged_data)
+# Создаем копию client_base !без столбца с адресом!
+revenue_data = client_base[['client_id']]
+
+# Аргумент how='left' определяет тип объединения как left join
+revenue_data = revenue_data.merge(rzd, on='client_id', how='left')
+revenue_data = revenue_data.merge(auto, on='client_id', how='left')
+revenue_data = revenue_data.merge(air, on='client_id', how='left')
+
+# Создаем копию таблицы
+revenue_data_with_address = revenue_data.copy()
+
+# Добавляем адрес в копию
+revenue_data_with_address['address'] = client_base['address']
+
+print("Таблица с тремя типами выручки для каждого client_id без указания адреса клиента:")
+print(revenue_data)
+
+print("Таблица с тремя типами выручки для каждого client_id с указанием адреса клиента:")
+print(revenue_data_with_address)
