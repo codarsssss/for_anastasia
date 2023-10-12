@@ -21,4 +21,7 @@ visit_log.loc[(visit_log['traffic_source'].isin(['paid', 'email'])) & (visit_log
 # Остальные значения столбца source_type остаются без изменений
 
 # Выводим первые 5 строк датафрейма для проверки результата
-print(visit_log.head())
+print(visit_log)
+
+# Сохраняем обработанный документ в visit_log_fin.csv
+visit_log.to_csv('visit_log_fin.csv', sep=';', index=False)
